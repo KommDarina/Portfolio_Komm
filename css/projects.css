@@ -1,0 +1,431 @@
+@font-face {
+  font-family: "MainFont";
+  src: url("../fonts/OpenSans-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Headline";
+  src: url("../fonts/Feroniapi-MediumItalic.woff2") format("woff2");
+}
+:root {
+  --side-space: 4vw;
+  --text-color: #000;
+  --hover-color: #777;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "MainFont", sans-serif;
+  color: var(--text-color);
+  background: rgb(255, 255, 255);
+}
+
+/* ================= HEADER ================= */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1vh var(--side-space);
+  z-index: 1000;
+  background: #ff4fd8;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  gap: 2vw;
+  align-items: center;
+}
+
+.brand,
+.home-link,
+.nav-link {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: clamp(14px, 1.4vw, 18px);
+  transition: color 0.3s ease;
+}
+
+.brand:hover,
+.home-link:hover,
+.nav-link:hover {
+  color: var(--hover-color);
+}
+
+/* ПРАВА ЧАСТИНА */
+.right {
+  display: flex;
+  gap: 2vw;
+  align-items: center;
+
+  line-height: 1.2;
+}
+
+/* ТЕКСТ */
+.brand,
+.home-link,
+.nav-link,
+.social a {
+  text-decoration: none;
+  color: black;
+  font-size: clamp(14px, 1.4vw, 18px);
+  transition: opacity 0.3s ease;
+}
+
+/* HOVER */
+.brand:hover,
+.home-link:hover,
+.nav-link:hover,
+.social a:hover {
+  opacity: 0.5;
+}
+
+/* BACKGROUND SVG */
+.hero-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+
+  pointer-events: none;
+}
+
+/* MAIN GRID */
+
+.projects {
+  padding: 10vh 5px 2vh 5px; /* менші бокові відступи */
+}
+
+.grid {
+  column-count: 2;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  row-gap: 10px;
+  padding: 0;
+}
+
+/* CARD */
+
+.project-card {
+  position: relative;
+  background: rgb(0, 0, 0);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  break-inside: avoid;
+  margin-bottom: 5px;
+  /*border: 0.05em solid black;*/
+}
+
+.project-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* HOVER */
+
+.project-hover {
+  position: absolute;
+  inset: 0;
+  background: #ff4fd8;
+  color: black;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 2vh 2vw;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.project-card:hover .project-hover {
+  opacity: 1;
+}
+
+.hover-top h2 {
+  font-family: "Headline", sans-serif;
+  margin: 0;
+  font-size: 3rem;
+}
+
+.hover-top p,
+.hover-bottom p {
+  margin: 0.3vh 0 0 0;
+  font-size: 1.5rem;
+}
+
+/* CATEGORY BAR */
+
+.category-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 1vh var(--space);
+  z-index: 1000;
+  background: rgb(246, 255, 0);
+}
+
+.category-inner {
+  display: grid;
+  grid-template-columns: 5fr 5fr 5fr;
+  align-items: center;
+  width: 100%;
+}
+
+.category-inner span {
+  cursor: pointer;
+  font-size: clamp(0.9rem, 1vw, 1rem);
+}
+
+.categories-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+}
+
+.arrow {
+  width: 1em;
+  height: 1em;
+}
+
+/* ================= DROPDOWN ================= */
+
+.category-dropdown {
+  position: absolute;
+  bottom: 100%;
+  left: var(--side-space); /* ВАЖЛИВО */
+
+  z-index: 1000;
+  background: rgb(246, 255, 0);
+  padding: 2vh 2vw;
+  border: 0.05em solid black;
+
+  display: none;
+  flex-direction: column;
+  gap: 1vh;
+  z-index: 10001;
+}
+.category-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 1vh var(--side-space);
+  z-index: 1000;
+  background: #ff4fd8;
+
+  position: fixed;
+}
+
+.category-bar.active .category-dropdown {
+  display: flex;
+}
+.category-dropdown span:hover {
+  color: #ff4fd8;
+}
+.category-inner span[data-filter="all"] {
+  margin: 0 auto;
+}
+/* ================= Overlay ================= */
+
+.project-overlay {
+  position: fixed;
+  inset: 0;
+  background: white;
+  display: none;
+  z-index: 500;
+  overflow-y: auto;
+
+  font-family: "MainFont", sans-serif;
+}
+
+.project-overlay.active {
+  display: block;
+}
+
+/* КНОПКА ЗАКРИТТЯ */
+
+.overlay-close {
+  position: fixed;
+  top: 3rem;
+  right: 3rem;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+/* ТЕКСТ */
+
+.overlay-content {
+  max-width: 80%;
+  margin: 8vh 0 4vh 4vw; /* <-- ближче до лівого краю */
+}
+
+/* Заголовок */
+.overlay-title {
+  margin: 0 0 0.5rem 0;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  text-transform: uppercase;
+}
+
+/* Рік + категорія */
+.overlay-year,
+.overlay-category {
+  margin: 0;
+  font-size: 1rem;
+  color: #ff4fd8;
+}
+
+/* Опис */
+.overlay-description {
+  margin-top: 1rem;
+  line-height: 1.2;
+  max-width: 80%;
+}
+
+/* ЗОБРАЖЕННЯ */
+
+.overlay-images {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  padding: 0 0 10vh 4vw; /* <-- вирівняно з текстом */
+}
+
+.overlay-images img {
+  width: 65%;
+  display: block;
+  background-color: #b5b5b5;
+}
+
+/* прибираємо скролбар (опційно) */
+.project-overlay::-webkit-scrollbar {
+  width: 0;
+}
+.overlay-images video {
+  width: 65%;
+
+  object-fit: contain;
+  display: block;
+}
+/* ================= MEDIA ================= */
+
+@media (max-width: 900px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1vh;
+  }
+
+  .left {
+    flex-wrap: wrap;
+    gap: 2vw;
+  }
+
+  .right {
+    flex-direction: row;
+    gap: 4vw;
+  }
+
+  /* щоб текст не налазив */
+  .brand,
+  .home-link,
+  .nav-link,
+  .social a {
+    font-size: 14px;
+  }
+
+  /* ================= HERO ================= */
+
+  .hero {
+    padding-top: 12vh;
+  }
+
+  /* BACKGROUND — головне виправлення */
+  .hero-bg {
+    width: 140vw;
+    opacity: 0.15;
+    filter: blur(2px);
+  }
+  .overlay-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  .grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* ← тепер працює */
+  }
+
+  .project-card {
+    width: 90%;
+    margin-bottom: 10px;
+  }
+
+  .overlay-left {
+    width: 100%;
+    height: 60%; /* фото зверху */
+    padding: 1vh 2vw;
+  }
+
+  .overlay-left img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .overlay-right {
+    width: 100%;
+    height: 40%; /* інформація під фото */
+    padding: 4vh 3vw;
+    overflow-y: auto;
+  }
+
+  .overlay-close {
+    top: 5rem;
+    right: 1.5rem;
+  }
+  /* ТЕКСТ */
+  .overlay-content {
+    margin: 6vh 5vw 3vh 5vw; /* симетрично */
+    max-width: 100%;
+  }
+
+  .overlay-title {
+    margin-top: 5rem;
+    font-size: 1.3rem;
+  }
+
+  .overlay-year,
+  .overlay-category {
+    font-size: 0.9rem;
+  }
+
+  .overlay-description {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+
+  /* ЗОБРАЖЕННЯ */
+  .overlay-images {
+    padding: 0 0 8vh 0;
+    align-items: center; /* ← ключове */
+  }
+
+  .overlay-images img {
+    width: 90%; /* або 85% якщо хочеш більше повітря */
+  }
+}

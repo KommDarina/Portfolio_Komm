@@ -1,0 +1,235 @@
+@font-face {
+  font-family: "MainFont";
+  src: url("../fonts/OpenSans-Regular.ttf") format("truetype");
+}
+
+:root {
+  --side-space: 4vw;
+  --text-color: #000;
+  --hover-color: #777;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "MainFont", sans-serif;
+  color: var(--text-color);
+  background: white;
+}
+
+/* ================= HEADER ================= */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1vh var(--side-space);
+  z-index: 1000;
+  background: #ff4fd8;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  gap: 2vw;
+  align-items: center;
+}
+
+.brand,
+.home-link,
+.nav-link {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: clamp(14px, 1.4vw, 18px);
+  transition: color 0.3s ease;
+}
+
+.brand:hover,
+.home-link:hover,
+.nav-link:hover {
+  color: var(--hover-color);
+}
+
+/* ПРАВА ЧАСТИНА */
+.right {
+  display: flex;
+  gap: 2vw;
+  align-items: center;
+
+  line-height: 1.2;
+}
+
+/* ТЕКСТ */
+.brand,
+.home-link,
+.nav-link,
+.social a {
+  text-decoration: none;
+  color: black;
+  font-size: clamp(14px, 1.4vw, 18px);
+  transition: opacity 0.3s ease;
+}
+
+/* HOVER */
+.brand:hover,
+.home-link:hover,
+.nav-link:hover,
+.social a:hover {
+  opacity: 0.5;
+}
+/* ================= КОНТЕЙНЕР ФОТО ================= */
+
+.hero {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: rgb(255, 255, 255);
+}
+
+/* BACKGROUND SVG */
+.hero-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+/* LOGO */
+.hero-logo {
+  position: absolute;
+  bottom: 2vh;
+  left: 2vw;
+  width: 50vw;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* КОНТЕЙНЕР ФОТО */
+.hero-images {
+  position: absolute;
+  inset: 0;
+}
+
+/* ФОТО */
+.hero-images img {
+  position: absolute;
+  width: 30vw;
+  filter: blur(12px);
+  transition:
+    filter 0.4s ease,
+    transform 0.3s ease;
+  cursor: grab;
+  user-select: none;
+  will-change: transform;
+  touch-action: none;
+}
+
+/* HOVER */
+.hero-images img:hover {
+  filter: blur(0);
+  cursor: grabbing;
+}
+.hero-images img.dragging {
+  z-index: 9999;
+}
+/* ================= BUTTON ================= */
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-btn {
+  text-decoration: none;
+  color: black;
+  border: 0.12em solid black;
+  padding: 1em 2em;
+  font-size: clamp(14px, 1.2vw, 16px);
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.hero-btn:hover {
+  background: black;
+  color: white;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+  :root {
+    --side-space: 5vw;
+  }
+
+  /* ================= HEADER ================= */
+
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1vh;
+  }
+
+  .left {
+    flex-wrap: wrap;
+    gap: 2vw;
+  }
+
+  .right {
+    flex-direction: row;
+    gap: 4vw;
+  }
+
+  /* щоб текст не налазив */
+  .brand,
+  .home-link,
+  .nav-link,
+  .social a {
+    font-size: 14px;
+  }
+
+  /* ================= HERO ================= */
+
+  .hero {
+    padding-top: 12vh;
+  }
+
+  /* BACKGROUND — головне виправлення */
+  .hero-bg {
+    width: 140vw;
+    opacity: 0.15;
+    filter: blur(2px);
+  }
+
+  /* LOGO */
+  .hero-logo {
+    width: 85vw;
+    bottom: 4vh;
+    left: 5vw;
+  }
+
+  /* ================= IMAGES ================= */
+
+  .hero-images img {
+    width: 65vw;
+    filter: blur(8px);
+  }
+
+  .hero-images img.dragging {
+    transform: scale(1.05) !important;
+  }
+}

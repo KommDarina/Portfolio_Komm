@@ -1,0 +1,380 @@
+@font-face {
+  font-family: "Kodchasan";
+  src: url("../fonts/Kodchasan-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0px;
+  font-family: "Kodchasan";
+  color: #111;
+  background: rgb(233, 233, 233);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Контейнер */
+.container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgb(233, 233, 233);
+  /*backdrop-filter: blur(6px);*/
+  padding: 1.1vw var(--side-padding);
+  box-sizing: border-box;
+}
+:root {
+  --side-padding: 24px;
+  --side-padding-mobile: 12px;
+}
+/* === ВНУТРІШНІЙ КОНТЕЙНЕР === */
+.site-header .container {
+  max-width: 80vw;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.brand {
+  margin: 0;
+  font-size: clamp(16px, 1.6vw, 20px);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.brand a {
+  color: #111;
+  text-decoration: none;
+}
+.nav {
+  display: flex;
+  gap: 2vw;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #111;
+  font-size: clamp(16px, 1.6vw, 20px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #777;
+}
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgb(233, 233, 233);
+  padding: 20px 0; /* внутрішні відступи */
+  display: none;
+  font-family: "Kodchasan";
+  flex-direction: column;
+  gap: 8px; /* відстань між пунктами */
+}
+
+.dropdown:hover .dropdown-menu {
+  display: flex;
+}
+.dropdown-menu button.active {
+  background: none;
+  color: #62ff00;
+}
+
+.dropdown-menu button {
+  background: none;
+  font-family: "Kodchasan";
+  border: none;
+  text-transform: uppercase;
+  font-size: 20px;
+  text-align: left;
+  cursor: pointer;
+  font-weight: 600;
+}
+.dropdown-menu button:hover {
+  color: #404040;
+}
+/* Секція проектів */
+.section {
+  padding: 0;
+}
+.section-title {
+  margin: 0 0 24px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* === КАРТКА === */
+html {
+  scroll-snap-type: y mandatory;
+}
+.card {
+  position: relative;
+  width: 80vw;
+  height: 85vh;
+  margin: 5vh auto;
+  overflow: hidden;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+/* Контейнер з фото */
+.card-media {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  transition: transform 0.6s ease; /* плавність */
+  will-change: transform;
+}
+
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex: 0 0 100%;
+  user-select: none;
+}
+
+/* Навігаційні зони */
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 5;
+}
+
+.card::before {
+  left: 0;
+  cursor: w-resize; /* ← */
+}
+
+.card::after {
+  right: 0;
+  cursor: e-resize; /* → */
+}
+
+/* Кнопка Description */
+.desc-btn {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0);
+  border: none;
+  margin: 0;
+  font-family: "Kodchasan";
+  font-size: 20px;
+  font-weight: 600;
+  color: #62ff00;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.desc-btn:hover {
+  color: #555050;
+}
+
+/* Плашка */
+.card-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 100%;
+  box-sizing: border-box; /* ⬅️ КРИТИЧНО */
+
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+
+  padding: 6vh 3vw;
+  display: flex;
+  flex-direction: column;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.card.active .card-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: transparent;
+  border: none;
+  color: #ffffff00;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2.5vh;
+}
+
+.card-title,
+.card-year {
+  font-size: clamp(20px, 2vw, 32px);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.card-year {
+  color: #fff;
+}
+.card-title {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.card-sub {
+  color: #ccc;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.card-desc {
+  font-family: Arial, Helvetica, sans-serif; /* простий системний */
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: #ddd;
+  max-width: 90%;
+}
+.card-text {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.card-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-meta p {
+  margin: 0;
+  font-family: "Kodchasan";
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #62ff00; /* той самий зелений */
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  /* Менші бокові відступи */
+  :root {
+    --side-padding-mobile: 10px;
+  }
+
+  .site-header {
+    padding: 10px var(--side-padding-mobile);
+  }
+
+  /* Картка компактніша та ближче одна до одної */
+  .card {
+    width: calc(100% - var(--side-padding-mobile) * 2);
+    height: 55vh; /* менша висота картки */
+    margin: 2vh auto; /* значно менша відстань між проектами */
+  }
+
+  /* Менший контейнер для фото */
+  .card-media {
+    height: 100%;
+  }
+
+  /* Кнопка INFO піднімається вище */
+  .desc-btn {
+    bottom: 10px;
+    right: 10px;
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+
+  .card-overlay {
+    width: 100%;
+    height: 100%;
+    right: 0;
+    top: 0;
+
+    padding: 5vh 6vw;
+    overflow: hidden; /* ⬅️ нічого не вилазить */
+  }
+
+  .card-text {
+    height: 100%;
+    overflow-y: auto; /* ⬅️ скрол тільки всередині */
+    padding-right: 4px; /* щоб текст не різався */
+  }
+
+  /* === HEADER === */
+  .card-head {
+    margin-bottom: 2vh;
+  }
+
+  .card-title,
+  .card-year {
+    font-size: clamp(18px, 4vw, 22px);
+  }
+
+  /* === DESCRIPTION === */
+  .card-desc {
+    font-size: 10px;
+    line-height: 1.3;
+    max-width: 100%;
+  }
+
+  /* === FOOTER === */
+  .card-footer {
+    margin-top: 4vh;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .card-meta p {
+    font-size: 10px;
+  }
+
+  /* === INFO BUTTON === */
+  .desc-btn {
+    font-size: 10px;
+    padding: 6px 12px;
+  }
+}
