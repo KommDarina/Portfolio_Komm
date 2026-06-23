@@ -64,8 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           imagesContainer.appendChild(video);
         } else {
-
-        /* IMAGE */
+          /* IMAGE */
           const img = document.createElement("img");
 
           img.src = src;
@@ -84,4 +83,67 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.style.overflow = "";
     });
   });
+  /* ================= MOBILE 2-STEP INTERACTION ================= */
+
+  const isMobile = window.innerWidth <= 900;
+
+  if (isMobile) {
+    cards.forEach((card) => {
+      let activated = false;
+
+      card.addEventListener("click", (e) => {
+        const overlay = card.querySelector(".project-overlay");
+        const closeBtn = card.querySelector(".overlay-close");
+
+        // якщо натиснули закрити — закриваємо
+        if (e.target.closest(".overlay-close")) return;
+
+        // 1-й клік → показати hover
+        if (!activated) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          cards.forEach((c) => c.classList.remove("active"));
+          card.classList.add("active");
+
+          activated = true;
+          return;
+        }
+
+        // 2-й клік → відкриваємо overlay
+        const files = card.dataset.images.split(",");
+        const imagesContainer = card.querySelector(".overlay-images");
+
+        imagesContainer.innerHTML = "";
+
+        files.forEach((src) => {
+          src = src.trim();
+
+          if (
+            src.endsWith(".mp4") ||
+            src.endsWith(".webm") ||
+            src.endsWith(".mov")
+          ) {
+            const video = document.createElement("video");
+            video.src = src;
+            video.autoplay = true;
+            video.loop = true;
+            video.muted = true;
+            video.playsInline = true;
+            imagesContainer.appendChild(video);
+          } else {
+            const img = document.createElement("img");
+            img.src = src;
+            img.loading = "lazy";
+            imagesContainer.appendChild(img);
+          }
+        });
+
+        overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+
+        activated = false;
+      });
+    });
+  }
 });
