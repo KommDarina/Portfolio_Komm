@@ -89,17 +89,6 @@ body {
   opacity: 0.5;
 }
 
-/* BACKGROUND SVG */
-.hero-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90vw;
-
-  pointer-events: none;
-}
-
 /* MAIN GRID */
 
 .projects {
@@ -107,11 +96,9 @@ body {
 }
 
 .grid {
-  column-count: 2;
+  display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 10px;
-  row-gap: 10px;
-  padding: 0;
+  gap: 10px;
 }
 
 /* CARD */
@@ -316,7 +303,6 @@ body {
 }
 .overlay-images video {
   width: 65%;
-
   object-fit: contain;
   display: block;
 }
@@ -353,12 +339,6 @@ body {
     padding-top: 12vh;
   }
 
-  /* BACKGROUND — головне виправлення */
-  .hero-bg {
-    width: 140vw;
-    opacity: 0.15;
-    filter: blur(2px);
-  }
   .overlay-inner {
     display: flex;
     flex-direction: column;
@@ -400,15 +380,16 @@ body {
   }
   /* ТЕКСТ */
   .overlay-content {
-    margin: 6vh 5vw 3vh 5vw; /* симетрично */
+    margin: 6vh 5vw 3vh 5vw;
     max-width: 100%;
   }
 
   .overlay-title {
-    margin-top: 5rem;
-    font-size: 1.3rem;
+    margin-top: 4.5rem;
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+    line-height: 1.1;
   }
-
   .overlay-year,
   .overlay-category {
     font-size: 0.9rem;
@@ -425,7 +406,9 @@ body {
     align-items: center; /* ← ключове */
   }
 
-  .overlay-images img {
-    width: 90%; /* або 85% якщо хочеш більше повітря */
+  .overlay-images img,
+  .overlay-images video {
+    width: 90%;
+    display: block;
   }
 }
